@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>REGISTRATION FORM</title>
+</head>
+<body>
+
+    
+        <div class="right">
+          <h1>Sign Up</h1>
+          <p>Please fill in this form to create an account.</p>
+          <hr>
+          
+          <input type="text" placeholder="Enter username" name="username" id="username">
+          <br>
+      
+          
+          <input type="text" placeholder="Enter Email" name="email" id="email" >
+          <br>
+      
+        
+          <input type="password" placeholder="Enter Password" name="psw" id="password">
+          <br>
+      
+        
+         <input type="submit" id="signUp" name="signup_submit" value="sign up" />
+         <input type="submit" id="Return" name="return back" value="RETURN" />
+        
+          </div>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+            import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-analytics.js";
+      
+            import { getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
+       
+            const firebaseConfig = {
+  apiKey: "AIzaSyCJu9pKc7_W0oF7o2MoInWkSwC4Eb_lTeA",
+  authDomain: "precious-jewelery.firebaseapp.com",
+  projectId: "precious-jewelery",
+  storageBucket: "precious-jewelery.appspot.com",
+  messagingSenderId: "1021326677829",
+  appId: "1:1021326677829:web:29871ebcf3c55bc1d6902c",
+  measurementId: "G-CRQTT7RX5N"
+};
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+        const database=getDatabase(app);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+      
+signUp.addEventListener('click',(e)=>{
+      e.preventDefault();
+    var email=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+    var username=document.getElementById('username').value;
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+
+ set(ref(database,'users/'+user.uid),{
+      username:username,
+      email:email
+    });
+    
+    alert("user created")
+    
+})
+.catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(errorMessage)
+    // ..
+  });
+
+   
+    // ...
+  
+})
+
+Return.addEventListener('click',(event)=>{
+  window.location.href="main.html"
+})
+
+ </script>  
+      
